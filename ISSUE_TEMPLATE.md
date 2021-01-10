@@ -1,8 +1,9 @@
-*Requisite minimal reproducible example, formatted as plain text :*
+_Requisite minimal reproducible example, formatted as plain text :_
 
 <hr>
 
 #### Optional: concerning jsx.
+
 PLEASE PLEASE PLEASE make sure you have properly
 setup and are sourcing this plugin https://github.com/mxw/vim-jsx
 
