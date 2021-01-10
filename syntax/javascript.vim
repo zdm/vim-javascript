@@ -53,12 +53,12 @@ syntax match   jsModuleComma        contained /,/ skipwhite skipempty nextgroup=
 " Strings, Templates, Numbers
 syntax region  jsString           start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ end=+$+  contains=jsSpecial extend
 
-" syntax region  jsTemplateString   start=+`+  skip=+\\`+  end=+`+     contains=jsTemplateExpression,jsSpecial extend
-" syntax match   jsTaggedTemplate   /\<\K\k*\ze`/ nextgroup=jsTemplateString
+" syntax include @SQL syntax/pgsql.vim
+" syntax region  jsTemplateStringSQL start=/sql`/ skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell,@SQL keepend
+" syntax region  jsTemplateString    start=/`/    skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell      keepend
 
-syntax include @SQL syntax/pgsql.vim
-syntax region  jsTemplateStringSQL start=/sql`/ skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell,@SQL keepend
-syntax region  jsTemplateString    start=/`/    skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell      keepend
+syntax region  jsTemplateString   start=+`+  skip=+\\`+  end=+`+     contains=jsTemplateExpression,jsSpecial extend
+syntax match   jsTaggedTemplate   /\<\K\k*\ze`/ nextgroup=jsTemplateString
 
 syntax match   jsNumber           /\c\<\%(\d\+\%(e[+-]\=\d\+\)\=\|0b[01]\+\|0o\o\+\|0x\x\+\)\>/
 syntax keyword jsNumber           Infinity
@@ -157,7 +157,7 @@ syntax region  jsRepeatBlock        contained matchgroup=jsRepeatBraces        s
 syntax region  jsDestructuringBlock contained matchgroup=jsDestructuringBraces start=/{/  end=/}/  contains=jsDestructuringProperty,jsDestructuringAssignment,jsDestructuringNoise,jsDestructuringPropertyComputed,jsSpreadExpression,jsComment nextgroup=jsFlowDefinition extend
 syntax region  jsDestructuringArray contained matchgroup=jsDestructuringBraces start=/\[/ end=/\]/ contains=jsDestructuringPropertyValue,jsDestructuringNoise,jsDestructuringProperty,jsSpreadExpression,jsDestructuringBlock,jsDestructuringArray,jsComment nextgroup=jsFlowDefinition extend
 syntax region  jsObject             contained matchgroup=jsObjectBraces        start=/{/  end=/}/  contains=jsObjectKey,jsObjectKeyString,jsObjectKeyComputed,jsObjectShorthandProp,jsObjectSeparator,jsObjectFuncName,jsObjectMethodType,jsGenerator,jsComment,jsObjectStringKey,jsSpreadExpression,jsDecorator,jsAsyncKeyword,jsTemplateString extend
-syntax region  jsBlock                        matchgroup=jsBraces              start=/{/  end=/}/  contains=@jsAll,jsSpreadExpression extend
+syntax region  jsBlock                        matchgroup=jsBraces              start=/{/  end=/}/  contains=@jsAll,jsSpreadExpression extend fold
 syntax region  jsModuleGroup        contained matchgroup=jsModuleBraces        start=/{/ end=/}/   contains=jsModuleKeyword,jsModuleComma,jsModuleAs,jsComment,jsFlowTypeKeyword skipwhite skipempty nextgroup=jsFrom
 syntax region  jsSpreadExpression   contained matchgroup=jsSpreadOperator      start=/\.\.\./ end=/[,}\]]\@=/ contains=@jsExpression
 syntax region  jsRestExpression     contained matchgroup=jsRestOperator        start=/\.\.\./ end=/[,)]\@=/
@@ -202,7 +202,7 @@ syntax match   jsDestructuringAssignment        contained /\k\+\ze\s*:/ skipwhit
 syntax region  jsDestructuringValue             contained start=/=/ end=/[,}\]]\@=/ contains=@jsExpression extend
 syntax region  jsDestructuringValueAssignment   contained start=/:/ end=/[,}=]\@=/ contains=jsDestructuringPropertyValue,jsDestructuringBlock,jsNoise,jsDestructuringNoise skipwhite skipempty nextgroup=jsDestructuringValue extend
 syntax match   jsDestructuringNoise             contained /[,[\]]/
-syntax region  jsDestructuringPropertyComputed  contained matchgroup=jsDestructuringBraces start=/\[/ end=/]/ contains=@jsExpression skipwhite skipempty nextgroup=jsDestructuringValue,jsDestructuringValueAssignment,jsDestructuringNoise extend
+syntax region  jsDestructuringPropertyComputed  contained matchgroup=jsDestructuringBraces start=/\[/ end=/]/ contains=@jsExpression skipwhite skipempty nextgroup=jsDestructuringValue,jsDestructuringValueAssignment,jsDestructuringNoise extend fold
 
 " Comments
 syntax keyword jsCommentTodo    contained TODO FIXME XXX TBD NOTE
