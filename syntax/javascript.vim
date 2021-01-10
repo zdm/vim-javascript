@@ -53,12 +53,11 @@ syntax match   jsModuleComma        contained /,/ skipwhite skipempty nextgroup=
 " Strings, Templates, Numbers
 syntax region  jsString           start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ end=+$+  contains=jsSpecial extend
 
-" syntax include @SQL syntax/pgsql.vim
-" syntax region  jsTemplateStringSQL start=/sql`/ skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell,@SQL keepend
-" syntax region  jsTemplateString    start=/`/    skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell      keepend
+syntax region  jsTemplateStringSQL start=/sql`/ skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell,@SQL extend keepend
+syntax region  jsTemplateString    start=/`/    skip=/\\`/ end=/`/ contains=jsTemplateExpression,jsSpecial,@Spell      extend keepend
 
-syntax region  jsTemplateString   start=+`+  skip=+\\`+  end=+`+     contains=jsTemplateExpression,jsSpecial extend
-syntax match   jsTaggedTemplate   /\<\K\k*\ze`/ nextgroup=jsTemplateString
+" syntax region  jsTemplateString   start=+`+  skip=+\\`+  end=+`+     contains=jsTemplateExpression,jsSpecial extend
+" syntax match   jsTaggedTemplate   /\<\K\k*\ze`/ nextgroup=jsTemplateString
 
 syntax match   jsNumber           /\c\<\%(\d\+\%(e[+-]\=\d\+\)\=\|0b[01]\+\|0o\o\+\|0x\x\+\)\>/
 syntax keyword jsNumber           Infinity
@@ -393,7 +392,10 @@ syntax cluster  javaScriptExpression contains=@jsAll
 " Vim's default html.vim highlights all javascript as 'Special'
 hi! def link javaScript              NONE
 
+syntax include @SQL syntax/pgsql.vim
+
 let b:current_syntax = "javascript"
+
 if main_syntax == 'javascript'
   unlet main_syntax
 endif
