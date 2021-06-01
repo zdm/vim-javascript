@@ -12,8 +12,5 @@
         "type": "git",
         "url": "https://github.com/zdm/vim-javascript.git"
     },
-    "author": "zdm <zdm@softvisio.net>",
-    "lint": [
-        "**"
-    ]
+    "author": "zdm <zdm@softvisio.net>"
 }
